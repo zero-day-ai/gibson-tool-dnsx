@@ -1,4 +1,4 @@
-module github.com/zero-day-ai/tools/discovery/dnsx
+module github.com/zero-day-ai/gibson-tool-dnsx
 
 go 1.24.4
 
