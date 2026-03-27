@@ -1,0 +1,40 @@
+kind: tool
+name: dnsx
+version: 1.0.0
+description: Fast and multi-purpose DNS toolkit for DNS resolution and record enumeration
+author: Gibson Security Team
+license: MIT
+repository: https://github.com/zero-day-ai/gibson-tools-official
+
+build:
+  command: go build -o dnsx .
+  artifacts:
+    - dnsx
+  workdir: .
+
+runtime:
+  type: go
+  entrypoint: ./dnsx
+  port: 0
+  timeout:
+    default: 5m
+    min: 30s
+    max: 30m
+
+dependencies:
+  gibson: ">=1.0.0"
+  system:
+    - dnsx  # dnsx must be installed (go install -v github.com/projectdiscovery/dnsx/cmd/dnsx@latest)
+  env: {}
+
+# Worker configuration for queue-based execution
+worker:
+  # dnsx is I/O-bound (DNS queries), so higher concurrency is beneficial.
+  # Each query is lightweight, so we can handle more concurrent requests.
+  concurrency: 8
+
+  # Allow up to 60 seconds for graceful shutdown
+  shutdown_timeout: 60s
+
+  # Heartbeat every 10 seconds to maintain health status
+  heartbeat_interval: 10s

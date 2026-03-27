@@ -1,0 +1,47 @@
+syntax = "proto3";
+package gibson.tools.dnsx;
+option go_package = "github.com/zero-day-ai/tools/discovery/dnsx/gen";
+
+import "graphrag.proto";
+
+// DnsxRequest represents input for the dnsx tool
+message DnsxRequest {
+    // Hosts is the list of hosts/domains to resolve (required)
+    repeated string hosts = 1;
+
+    // ResolveA enables A record resolution
+    bool resolve_a = 2;
+
+    // ResolveCname enables CNAME record resolution
+    bool resolve_cname = 3;
+
+    // ResolveMx enables MX record resolution
+    bool resolve_mx = 4;
+
+    // TimeoutSeconds is the timeout for DNS resolution in seconds
+    int32 timeout_seconds = 5;
+}
+
+// DnsResult represents DNS resolution results for a single host
+message DnsResult {
+    // Host is the hostname/domain that was resolved
+    string host = 1;
+
+    // ARecords contains the A records (IPv4 addresses)
+    repeated string a_records = 2;
+
+    // CnameRecords contains the CNAME records
+    repeated string cname_records = 3;
+
+    // Status is the resolution status (success, failed, timeout, etc.)
+    string status = 4;
+}
+
+// DnsxResponse represents output from the dnsx tool
+message DnsxResponse {
+    // Results contains the DNS resolution results for each host
+    repeated DnsResult results = 1;
+
+    // Discovery result for automatic graph storage
+    gibson.graphrag.DiscoveryResult discovery = 100;
+}
