@@ -42,7 +42,7 @@ import (
 	healthhttp "github.com/zero-day-ai/sdk/health/http"
 	"github.com/zero-day-ai/sdk/tool/worker"
 	"github.com/zero-day-ai/sdk/types"
-	"github.com/zero-day-ai/tools/discovery/dnsx"
+	"github.com/zero-day-ai/gibson-tool-dnsx"
 )
 
 func main() {

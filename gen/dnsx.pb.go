@@ -252,7 +252,7 @@ const file_dnsx_proto_rawDesc = "" +
 	"\x06status\x18\x04 \x01(\tR\x06status\"\x86\x01\n" +
 	"\fDnsxResponse\x126\n" +
 	"\aresults\x18\x01 \x03(\v2\x1c.gibson.tools.dnsx.DnsResultR\aresults\x12>\n" +
-	"\tdiscovery\x18d \x01(\v2 .gibson.graphrag.DiscoveryResultR\tdiscoveryB1Z/github.com/zero-day-ai/tools/discovery/dnsx/genb\x06proto3"
+	"\tdiscovery\x18d \x01(\v2 .gibson.graphrag.DiscoveryResultR\tdiscoveryB1Z/github.com/zero-day-ai/gibson-tool-dnsx/genb\x06proto3"
 
 var (
 	file_dnsx_proto_rawDescOnce sync.Once
