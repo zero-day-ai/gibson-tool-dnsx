@@ -7,14 +7,14 @@ license: MIT
 repository: https://github.com/zero-day-ai/gibson-tools-official
 
 build:
-  command: go build -o dnsx .
+  command: go build -o dnsx-tool ./cmd
   artifacts:
-    - dnsx
+    - dnsx-tool
   workdir: .
 
 runtime:
   type: go
-  entrypoint: ./dnsx
+  entrypoint: ./dnsx-tool
   port: 0
   timeout:
     default: 5m
@@ -25,16 +25,6 @@ dependencies:
   gibson: ">=1.0.0"
   system:
     - dnsx  # dnsx must be installed (go install -v github.com/projectdiscovery/dnsx/cmd/dnsx@latest)
-  env: {}
-
-# Worker configuration for queue-based execution
-worker:
-  # dnsx is I/O-bound (DNS queries), so higher concurrency is beneficial.
-  # Each query is lightweight, so we can handle more concurrent requests.
-  concurrency: 8
-
-  # Allow up to 60 seconds for graceful shutdown
-  shutdown_timeout: 60s
-
-  # Heartbeat every 10 seconds to maintain health status
-  heartbeat_interval: 10s
+  env:
+    GIBSON_PLATFORM_URL: "Gibson platform gRPC endpoint (e.g. platform.gibson.ai:443)"
+    GIBSON_API_KEY: "Tenant-scoped API key issued by the platform"
