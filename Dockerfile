@@ -27,7 +27,7 @@ RUN wget -qO /tmp/dnsx.zip \
 # ============================================================================
 # Stage 2: Builder - Build Go wrapper binary
 # ============================================================================
-FROM golang:1.24.4-alpine AS builder
+FROM golang:1.25-alpine AS builder
 
 WORKDIR /build
 
