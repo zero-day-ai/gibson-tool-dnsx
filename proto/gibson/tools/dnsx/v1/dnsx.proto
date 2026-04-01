@@ -1,8 +1,8 @@
 syntax = "proto3";
-package gibson.tools.dnsx;
+package gibson.tools.dnsx.v1;
 option go_package = "github.com/zero-day-ai/tools/discovery/dnsx/gen";
 
-import "graphrag.proto";
+import "gibson/graphrag/v1/graphrag.proto";
 
 // DnsxRequest represents input for the dnsx tool
 message DnsxRequest {
@@ -43,5 +43,5 @@ message DnsxResponse {
     repeated DnsResult results = 1;
 
     // Discovery result for automatic graph storage
-    gibson.graphrag.DiscoveryResult discovery = 100;
+    gibson.graphrag.v1.DiscoveryResult discovery = 100;
 }
