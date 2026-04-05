@@ -13,6 +13,7 @@ func main() {
 	if err := serve.Tool(tool,
 		serve.WithPlatformFromEnv(),
 		serve.WithGracefulShutdown(30*time.Second),
+		serve.WithExtractor(dnsx.NewDnsxExtractor()),
 	); err != nil {
 		log.Fatal(err)
 	}

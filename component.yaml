@@ -24,7 +24,9 @@ runtime:
 dependencies:
   gibson: ">=1.0.0"
   system:
-    - dnsx  # dnsx must be installed (go install -v github.com/projectdiscovery/dnsx/cmd/dnsx@latest)
+    - name: dnsx
+      required: true
+      version_command: "-version"
   env:
     GIBSON_PLATFORM_URL: "Gibson platform gRPC endpoint (e.g. platform.gibson.ai:443)"
     GIBSON_API_KEY: "Tenant-scoped API key issued by the platform"

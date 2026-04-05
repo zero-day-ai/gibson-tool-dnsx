@@ -10,7 +10,6 @@ import (
 	"strings"
 	"time"
 
-	graphragpb "github.com/zero-day-ai/sdk/api/gen/gibson/graphrag/v1"
 	"github.com/zero-day-ai/sdk/exec"
 	"github.com/zero-day-ai/sdk/health"
 	"github.com/zero-day-ai/sdk/tool"
@@ -207,16 +206,16 @@ func (t *ToolImpl) ExecuteProto(ctx context.Context, input proto.Message) (proto
 	}
 
 	// Parse dnsx JSON output to proto types
-	discoveryResult, results, err := parseOutput(result.Stdout, req)
+	results, err := parseOutput(result.Stdout)
 	if err != nil {
 		return nil, toolerr.New(ToolName, "parse", toolerr.ErrCodeParseError, err.Error()).
 			WithCause(err).
 			WithClass(toolerr.ErrorClassSemantic)
 	}
 
-	// Convert discovery result to DnsxResponse
+	// Convert results to DnsxResponse
 	scanDuration := time.Since(startTime).Seconds()
-	response := convertToProtoResponse(discoveryResult, results, scanDuration)
+	response := convertToProtoResponse(results, scanDuration)
 
 	return response, nil
 }
@@ -241,13 +240,9 @@ type DnsxJSONResult struct {
 	Status    string   `json:"status"`
 }
 
-// parseOutput parses the JSON output from dnsx and returns proto DiscoveryResult and results
-func parseOutput(data []byte, req *gen.DnsxRequest) (*graphragpb.DiscoveryResult, []*gen.DnsResult, error) {
-	discoveryResult := &graphragpb.DiscoveryResult{}
+// parseOutput parses the JSON output from dnsx and returns proto DnsResults.
+func parseOutput(data []byte) ([]*gen.DnsResult, error) {
 	var results []*gen.DnsResult
-
-	// Track unique hosts to avoid duplicates in discovery graph
-	seenHosts := make(map[string]bool)
 
 	scanner := bufio.NewScanner(bytes.NewReader(data))
 	for scanner.Scan() {
@@ -262,30 +257,14 @@ func parseOutput(data []byte, req *gen.DnsxRequest) (*graphragpb.DiscoveryResult
 			continue
 		}
 
-		// Convert to proto DnsResult
-		protoResult := convertJSONToProtoResult(&jsonResult)
-		results = append(results, protoResult)
-
-		// Extract discovery information - create Host nodes for resolved IPs
-		if len(jsonResult.A) > 0 {
-			for _, ip := range jsonResult.A {
-				if !seenHosts[ip] {
-					hostNode := &graphragpb.Host{
-						Ip:       ip,
-						Hostname: ptrStr(jsonResult.Host),
-					}
-					discoveryResult.Hosts = append(discoveryResult.Hosts, hostNode)
-					seenHosts[ip] = true
-				}
-			}
-		}
+		results = append(results, convertJSONToProtoResult(&jsonResult))
 	}
 
 	if err := scanner.Err(); err != nil {
-		return nil, nil, fmt.Errorf("failed to scan dnsx output: %w", err)
+		return nil, fmt.Errorf("failed to scan dnsx output: %w", err)
 	}
 
-	return discoveryResult, results, nil
+	return results, nil
 }
 
 // convertJSONToProtoResult converts dnsx JSON result to proto DnsResult
@@ -320,19 +299,13 @@ func determineStatus(jsonResult *DnsxJSONResult) string {
 	return "no_records"
 }
 
-// ptrStr returns a pointer to the given string
-func ptrStr(s string) *string {
-	return &s
-}
-
-// convertToProtoResponse converts DiscoveryResult and results to DnsxResponse
-func convertToProtoResponse(discoveryResult *graphragpb.DiscoveryResult, results []*gen.DnsResult, scanDuration float64) *gen.DnsxResponse {
-	response := &gen.DnsxResponse{
-		Results:   results,
-		Discovery: discoveryResult,
+// convertToProtoResponse wraps DNS results in a DnsxResponse.
+// The Discovery field (proto field 100) is populated by the SDK serve layer
+// via the DnsxExtractor after execution.
+func convertToProtoResponse(results []*gen.DnsResult, scanDuration float64) *gen.DnsxResponse {
+	return &gen.DnsxResponse{
+		Results: results,
 	}
-
-	return response
 }
 
 // classifyExecutionError determines the error class based on the underlying error
