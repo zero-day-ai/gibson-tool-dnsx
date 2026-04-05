@@ -3,7 +3,7 @@ module github.com/zero-day-ai/gibson-tool-dnsx
 go 1.25.0
 
 require (
-	github.com/zero-day-ai/sdk v0.58.1-0.20260401215420-eec8d9d4b5ef
+	github.com/zero-day-ai/sdk v0.60.1
 	google.golang.org/protobuf v1.36.11
 )
 
@@ -25,6 +25,7 @@ require (
 	golang.org/x/text v0.34.0 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20260209200024-4cfbd4190f57 // indirect
 	google.golang.org/grpc v1.79.2 // indirect
+	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
 
 replace google.golang.org/protobuf => google.golang.org/protobuf v1.34.2
