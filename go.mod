@@ -3,7 +3,7 @@ module github.com/zero-day-ai/gibson-tool-dnsx
 go 1.25.0
 
 require (
-	github.com/zero-day-ai/sdk v0.64.1
+	github.com/zero-day-ai/sdk v0.65.0
 	google.golang.org/protobuf v1.36.11
 )
 

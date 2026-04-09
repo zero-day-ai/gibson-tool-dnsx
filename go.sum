@@ -37,8 +37,8 @@ github.com/stretchr/testify v1.11.1 h1:7s2iGBzp5EwR7/aIZr8ao5+dra3wiQyKjjFuvgVKu
 github.com/stretchr/testify v1.11.1/go.mod h1:wZwfW3scLgRK+23gO65QZefKpKQRnfz6sD981Nm4B6U=
 github.com/yuin/gopher-lua v1.1.1 h1:kYKnWBjvbNP4XLT3+bPEwAXJx262OhaHDWDVOPjL46M=
 github.com/yuin/gopher-lua v1.1.1/go.mod h1:GBR0iDaNXjAgGg9zfCvksxSRnQx76gclCIb7kdAd1Pw=
-github.com/zero-day-ai/sdk v0.64.1 h1:rh9JE9m+kQerTgtA9L3ogjE89eILJeUVk2P3p/hIXLw=
-github.com/zero-day-ai/sdk v0.64.1/go.mod h1:14MrwhVHhGuL4l69QmNEpq9OBYSPHwhH5COOv9DR5Qk=
+github.com/zero-day-ai/sdk v0.65.0 h1:/dp5laY9bsADzHxjYE6Ih4UxC4VhlXVu06Y216PFaqE=
+github.com/zero-day-ai/sdk v0.65.0/go.mod h1:14MrwhVHhGuL4l69QmNEpq9OBYSPHwhH5COOv9DR5Qk=
 go.opentelemetry.io/auto/sdk v1.2.1 h1:jXsnJ4Lmnqd11kwkBV2LgLoFMZKizbCi5fNZ/ipaZ64=
 go.opentelemetry.io/auto/sdk v1.2.1/go.mod h1:KRTj+aOaElaLi+wW1kO/DZRXwkF4C5xPbEe3ZiIhN7Y=
 go.opentelemetry.io/otel v1.42.0 h1:lSQGzTgVR3+sgJDAU/7/ZMjN9Z+vUip7leaqBKy4sho=
