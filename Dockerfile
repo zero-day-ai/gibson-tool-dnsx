@@ -29,12 +29,12 @@ RUN wget -qO /tmp/dnsx.zip \
 # ============================================================================
 FROM golang:1.25-alpine AS builder
 
+RUN apk add --no-cache git ca-certificates
+ENV GOPRIVATE=github.com/zero-day-ai/*
+
 WORKDIR /build
 
-# Copy go mod files
 COPY go.mod go.sum ./
-
-# Download dependencies
 RUN go mod download
 
 # Copy source code
